@@ -4,8 +4,8 @@ package MainPackage;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 
 
@@ -37,7 +37,8 @@ public class LogInFrame extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         txtUser = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        txtPass = new javax.swing.JPasswordField();
+        btnClose2 = new javax.swing.JButton();
         lblRegUser = new javax.swing.JLabel();
         regBusns = new javax.swing.JLabel();
         btnClose = new javax.swing.JButton();
@@ -76,18 +77,37 @@ public class LogInFrame extends javax.swing.JFrame {
         });
 
         jButton1.setBackground(new java.awt.Color(126, 175, 186));
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jButton1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jButton1.setForeground(new java.awt.Color(250, 250, 250));
         jButton1.setText("LOG IN");
         jButton1.setBorder(null);
-
-        jPasswordField1.setBackground(new java.awt.Color(255, 255, 255));
-        jPasswordField1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jPasswordField1.setForeground(new java.awt.Color(80, 80, 80));
-        jPasswordField1.setBorder(null);
-        jPasswordField1.addActionListener(new java.awt.event.ActionListener() {
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jPasswordField1ActionPerformed(evt);
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        txtPass.setBackground(new java.awt.Color(255, 255, 255));
+        txtPass.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtPass.setForeground(new java.awt.Color(80, 80, 80));
+        txtPass.setBorder(null);
+        txtPass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPassActionPerformed(evt);
+            }
+        });
+
+        btnClose2.setBackground(new java.awt.Color(188, 121, 120));
+        btnClose2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnClose2.setForeground(new java.awt.Color(255, 255, 255));
+        btnClose2.setText("RETURN");
+        btnClose2.setBorder(null);
+        btnClose2.setMaximumSize(new java.awt.Dimension(47, 20));
+        btnClose2.setMinimumSize(new java.awt.Dimension(47, 20));
+        btnClose2.setPreferredSize(new java.awt.Dimension(47, 20));
+        btnClose2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClose2ActionPerformed(evt);
             }
         });
 
@@ -102,7 +122,8 @@ public class LogInFrame extends javax.swing.JFrame {
                     .addComponent(jLabel1)
                     .addComponent(txtUser, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE)
                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPasswordField1))
+                    .addComponent(txtPass)
+                    .addComponent(btnClose2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -115,10 +136,12 @@ public class LogInFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
+                .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addGap(20, 20, 20)
+                .addComponent(btnClose2, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         lblRegUser.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -159,22 +182,23 @@ public class LogInFrame extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jLabel3)
                 .addGap(43, 43, 43)
                 .addComponent(btnClose, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(47, 47, 47)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 50, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(108, 108, 108)
-                        .addComponent(lblRegUser))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(127, 127, 127)
-                        .addComponent(regBusns))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(44, 44, 44)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(53, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(regBusns)
+                        .addGap(136, 136, 136))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(lblRegUser)
+                        .addGap(112, 112, 112))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -186,11 +210,11 @@ public class LogInFrame extends javax.swing.JFrame {
                     .addComponent(btnClose, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
+                .addGap(24, 24, 24)
                 .addComponent(lblRegUser)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(regBusns)
-                .addContainerGap(44, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -212,9 +236,9 @@ public class LogInFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtUserActionPerformed
 
-    private void jPasswordField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField1ActionPerformed
+    private void txtPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPassActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jPasswordField1ActionPerformed
+    }//GEN-LAST:event_txtPassActionPerformed
 
     private void lblRegUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblRegUserMouseClicked
         // TODO add your handling code here:
@@ -231,6 +255,50 @@ public class LogInFrame extends javax.swing.JFrame {
         System.exit(0);
 
     }//GEN-LAST:event_btnCloseActionPerformed
+
+    private void btnClose2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClose2ActionPerformed
+       this.setVisible(false);
+       new IntroFrame().setVisible(true); 
+
+    }//GEN-LAST:event_btnClose2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String logInUser = txtUser.getText();
+        String logInPass = new String(txtPass.getPassword());
+        String query = "SELECT * FROM USER_DATA_TABLE WHERE USER_NAME=? AND  USER_PASS=?";   
+                
+        try {
+            Connection connection = DriverManager.getConnection("jdbc:derby://localhost:1527/USER_DB","zhyke","zhyke");
+            System.out.println("Connection Created");
+            
+            
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setString(1,logInUser);
+            ps.setString(2,logInPass);
+            
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs.next()) {
+                
+                  JOptionPane.showMessageDialog(null,
+                  " LOG IN SUCCESS.",
+                  "LOG IN ALERT",
+                  JOptionPane.PLAIN_MESSAGE);
+
+            }
+            else{
+                 JOptionPane.showMessageDialog(null,
+                  " USER NOT FOUND.",
+                  "LOG IN ALERT",
+                  JOptionPane.PLAIN_MESSAGE);
+
+            }
+            
+            
+        } catch (SQLException ex) {
+           
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     public static void main(String args[]) {
@@ -267,15 +335,16 @@ public class LogInFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClose;
+    private javax.swing.JButton btnClose2;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JLabel lblRegUser;
     private javax.swing.JLabel regBusns;
+    private javax.swing.JPasswordField txtPass;
     private javax.swing.JTextField txtUser;
     // End of variables declaration//GEN-END:variables
 }
