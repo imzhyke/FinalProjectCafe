@@ -46,7 +46,6 @@ public class LogInFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Intro");
         setUndecorated(true);
-        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(153, 206, 216));
 
@@ -277,13 +276,17 @@ public class LogInFrame extends javax.swing.JFrame {
             ps.setString(2,logInPass);
             
             ResultSet rs = ps.executeQuery();
-            
+             
             if (rs.next()) {
                 
                   JOptionPane.showMessageDialog(null,
                   " LOG IN SUCCESS.",
                   "LOG IN ALERT",
                   JOptionPane.PLAIN_MESSAGE);
+                  
+                   this.setVisible(false);
+                   new UserFrame(logInUser).setVisible(true); 
+                  
 
             }
             else{

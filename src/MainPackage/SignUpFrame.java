@@ -46,8 +46,10 @@ public class SignUpFrame extends javax.swing.JFrame {
         btnClose = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Intro");
+        setTitle("SignUp");
+        setMinimumSize(new java.awt.Dimension(380, 750));
         setUndecorated(true);
+        setPreferredSize(new java.awt.Dimension(380, 750));
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(153, 206, 216));
