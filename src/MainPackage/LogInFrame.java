@@ -6,6 +6,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 
@@ -168,7 +170,7 @@ public class LogInFrame extends javax.swing.JFrame {
         btnClose.setBackground(new java.awt.Color(188, 121, 120));
         btnClose.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnClose.setForeground(new java.awt.Color(255, 255, 255));
-        btnClose.setText("X");
+        btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Exit.png"))); // NOI18N
         btnClose.setBorder(null);
         btnClose.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -181,14 +183,10 @@ public class LogInFrame extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addGap(0, 65, Short.MAX_VALUE)
                 .addComponent(jLabel3)
                 .addGap(43, 43, 43)
                 .addComponent(btnClose, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(47, 47, 47)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 50, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -197,7 +195,11 @@ public class LogInFrame extends javax.swing.JFrame {
                         .addGap(136, 136, 136))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(lblRegUser)
-                        .addGap(112, 112, 112))))
+                        .addGap(111, 111, 111))))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(44, 44, 44)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -209,9 +211,9 @@ public class LogInFrame extends javax.swing.JFrame {
                     .addComponent(btnClose, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24)
+                .addGap(18, 18, 18)
                 .addComponent(lblRegUser)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(12, 12, 12)
                 .addComponent(regBusns)
                 .addContainerGap(18, Short.MAX_VALUE))
         );
@@ -240,11 +242,15 @@ public class LogInFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_txtPassActionPerformed
 
     private void lblRegUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblRegUserMouseClicked
-        // TODO add your handling code here:
+       
+       this.setVisible(false);
+       new SignUpFrame().setVisible(true); 
+        
     }//GEN-LAST:event_lblRegUserMouseClicked
 
     private void regBusnsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_regBusnsMouseClicked
-        // TODO add your handling code here:
+       this.setVisible(false);
+       new RegBusnssFrame().setVisible(true); 
     }//GEN-LAST:event_regBusnsMouseClicked
 
     private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
@@ -265,15 +271,17 @@ public class LogInFrame extends javax.swing.JFrame {
         String logInUser = txtUser.getText();
         String logInPass = new String(txtPass.getPassword());
         String query = "SELECT * FROM USER_DATA_TABLE WHERE USER_NAME=? AND  USER_PASS=?";   
-                
+        
         try {
             Connection connection = DriverManager.getConnection("jdbc:derby://localhost:1527/USER_DB","zhyke","zhyke");
             System.out.println("Connection Created");
             
             
             PreparedStatement ps = connection.prepareStatement(query);
+
             ps.setString(1,logInUser);
             ps.setString(2,logInPass);
+
             
             ResultSet rs = ps.executeQuery();
              
@@ -286,23 +294,58 @@ public class LogInFrame extends javax.swing.JFrame {
                   
                    this.setVisible(false);
                    new UserFrame(logInUser).setVisible(true); 
-                  
 
             }
-            else{
-                 JOptionPane.showMessageDialog(null,
-                  " USER NOT FOUND.",
-                  "LOG IN ALERT",
-                  JOptionPane.PLAIN_MESSAGE);
-
+            else{ 
+               checkShop(logInUser,logInPass);
             }
-            
+
             
         } catch (SQLException ex) {
            
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+    
+    public void checkShop(String logInUser, String logInPass){
+        String query = "SELECT * FROM BSNS_DATA_TABLE WHERE BSNS_USER=? AND  BSNS_PASS=?";   
+        
+        try {
+            Connection connection = DriverManager.getConnection("jdbc:derby://localhost:1527/USER_DB","zhyke","zhyke");
+            
+            PreparedStatement ps = connection.prepareStatement(query);
+            
+            ps.setString(1,logInUser);
+            ps.setString(2,logInPass);
+            
+            ResultSet rs = ps.executeQuery();
+                 
+             System.out.println("Not a User");
 
+             if (rs.next()) {
+                 System.out.println("A Shiop");
+              JOptionPane.showMessageDialog(null,
+              " LOG IN SUCCESS.",
+              "LOG IN ALERT",
+              JOptionPane.PLAIN_MESSAGE);
+
+               this.setVisible(false);
+               new BusinessFrame(logInUser).setVisible(true); 
+
+
+
+            }else{
+              System.out.println("Not a Shop");
+              JOptionPane.showMessageDialog(null,
+              " USER NOT FOUND.",
+              "LOG IN ALERT",
+              JOptionPane.PLAIN_MESSAGE);
+             }
+            
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(LogInFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

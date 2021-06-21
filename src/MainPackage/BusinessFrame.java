@@ -16,36 +16,42 @@ import javax.swing.JOptionPane;
  *
  * @author XYKIRL
  */
-public class UserFrame extends javax.swing.JFrame {
+public class BusinessFrame extends javax.swing.JFrame {
 
     String Username;
+    String ShopName;
     double balance=0;
     
-    public UserFrame(String user) {
+    public BusinessFrame(String user) {
         Username = user;
+
+        
         initComponents();
          
-        String query = "SELECT * FROM USER_DATA_TABLE WHERE USER_NAME=?";   
+        String query = "SELECT * FROM BSNS_DATA_TABLE WHERE BSNS_USER=?";   
         
         try {
             Connection connection = DriverManager.getConnection("jdbc:derby://localhost:1527/USER_DB","zhyke","zhyke");
             
             PreparedStatement ps = connection.prepareStatement(query);
             
-            ps.setString(1,Username);
+            ps.setString(1,user);
              
             ResultSet rs = ps.executeQuery();
             
             if (rs.next()) {
-                    String bal = rs.getString("USER_BALANCE");
+                    String bal = rs.getString("BSNS_BALANCE");
                     
-                    lblName.setText(rs.getString("USER_FULLNAME"));
+                    ShopName = rs.getString("BSNS_NAME");
+                    
+                    lblName.setText(rs.getString("BSNS_NAME"));
                     if(bal == null){
                         lblBal.setText("No Balance");
                     }else{
                         lblBal.setText(bal);
                     }
-
+                    
+                   lblBal.setText(rs.getString("0"));
             }
             
         } catch (SQLException ex) {
@@ -54,7 +60,7 @@ public class UserFrame extends javax.swing.JFrame {
        
     }
 
-    private UserFrame() {
+    private BusinessFrame() {
           initComponents();
     }
 
@@ -76,19 +82,17 @@ public class UserFrame extends javax.swing.JFrame {
         lblName = new javax.swing.JLabel();
         lblBal = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        btnMyOrder = new javax.swing.JLabel();
-        btnOrder = new javax.swing.JLabel();
-        btnEditInfo = new javax.swing.JLabel();
-        btnAddBal = new javax.swing.JLabel();
+        btnViewMenu = new javax.swing.JLabel();
+        btnAddProduct = new javax.swing.JLabel();
+        btnDetails = new javax.swing.JLabel();
+        btnViewOrders = new javax.swing.JLabel();
         btnClose = new javax.swing.JButton();
         btnLogOut = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("User");
-        setMaximumSize(new java.awt.Dimension(380, 750));
         setMinimumSize(new java.awt.Dimension(380, 750));
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(380, 750));
         setResizable(false);
         setSize(new java.awt.Dimension(380, 750));
 
@@ -97,12 +101,12 @@ public class UserFrame extends javax.swing.JFrame {
         jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\XYKIRL\\Pictures\\Final Project Cafe'\\SmallLogo.png")); // NOI18N
 
         jPanel2.setBackground(new java.awt.Color(153, 206, 216));
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED), "USER DETAILS", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("American Captain", 0, 18), new java.awt.Color(89, 80, 80))); // NOI18N
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED), "Business portal", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("American Captain", 0, 18), new java.awt.Color(89, 80, 80))); // NOI18N
 
-        jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\XYKIRL\\Pictures\\Final Project Cafe'\\UserIcon.png")); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\XYKIRL\\Pictures\\Final Project Cafe'\\BSNS.png")); // NOI18N
 
         jLabel1.setForeground(new java.awt.Color(80, 80, 80));
-        jLabel1.setText("Name: ");
+        jLabel1.setText("Shop Name");
 
         jLabel4.setForeground(new java.awt.Color(80, 80, 80));
         jLabel4.setText("Balance:");
@@ -111,36 +115,36 @@ public class UserFrame extends javax.swing.JFrame {
 
         lblBal.setForeground(new java.awt.Color(80, 80, 80));
 
-        btnMyOrder.setIcon(new javax.swing.ImageIcon("C:\\Users\\XYKIRL\\Pictures\\Final Project Cafe'\\MyOrdersIcon.jpg")); // NOI18N
-        btnMyOrder.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102)));
-        btnMyOrder.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnViewMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/View Menu.jpg"))); // NOI18N
+        btnViewMenu.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(0, 102, 102)));
+        btnViewMenu.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnMyOrderMouseClicked(evt);
+                btnViewMenuMouseClicked(evt);
             }
         });
 
-        btnOrder.setIcon(new javax.swing.ImageIcon("C:\\Users\\XYKIRL\\Pictures\\Final Project Cafe'\\OrderNowIcon.jpg")); // NOI18N
-        btnOrder.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102)));
-        btnOrder.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnOrder.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnAddProduct.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/AddProduct.jpg"))); // NOI18N
+        btnAddProduct.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102)));
+        btnAddProduct.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnAddProduct.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnOrderMouseClicked(evt);
+                btnAddProductMouseClicked(evt);
             }
         });
 
-        btnEditInfo.setIcon(new javax.swing.ImageIcon("C:\\Users\\XYKIRL\\Pictures\\Final Project Cafe'\\EDIT.jpg")); // NOI18N
-        btnEditInfo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102)));
-        btnEditInfo.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnDetails.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/ShopDetails.jpg"))); // NOI18N
+        btnDetails.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102)));
+        btnDetails.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnEditInfoMouseClicked(evt);
+                btnDetailsMouseClicked(evt);
             }
         });
 
-        btnAddBal.setIcon(new javax.swing.ImageIcon("C:\\Users\\XYKIRL\\Pictures\\Final Project Cafe'\\ADD BALANCE.jpg")); // NOI18N
-        btnAddBal.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102)));
-        btnAddBal.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnViewOrders.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/ViewOrders.jpg"))); // NOI18N
+        btnViewOrders.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102)));
+        btnViewOrders.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnAddBalMouseClicked(evt);
+                btnViewOrdersMouseClicked(evt);
             }
         });
 
@@ -167,12 +171,12 @@ public class UserFrame extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(9, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnOrder, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnAddBal, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(btnAddProduct, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnViewOrders, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnEditInfo)
-                    .addComponent(btnMyOrder))
+                    .addComponent(btnDetails)
+                    .addComponent(btnViewMenu))
                 .addGap(12, 12, 12))
         );
         jPanel2Layout.setVerticalGroup(
@@ -195,12 +199,12 @@ public class UserFrame extends javax.swing.JFrame {
                 .addComponent(jLabel8)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnMyOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(btnViewMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAddProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnEditInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAddBal, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnViewOrders, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(72, 72, 72))
         );
 
@@ -297,59 +301,33 @@ public class UserFrame extends javax.swing.JFrame {
             
     }//GEN-LAST:event_btnLogOutActionPerformed
 
-    private void btnOrderMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnOrderMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnOrderMouseClicked
-
-    private void btnMyOrderMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMyOrderMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnMyOrderMouseClicked
-
-    private void btnAddBalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddBalMouseClicked
-       String cashInAmount = JOptionPane.showInputDialog(null, "Enter Amount", 
-                "CASH-IN", JOptionPane.INFORMATION_MESSAGE);
-       double amount = Double.parseDouble(cashInAmount);
+    private void btnAddProductMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddProductMouseClicked
+         
+        this.setVisible(false);
+        new AddProductFrame(Username,ShopName).setVisible(true);
         
-       String query = "UPDATE USER_DATA_TABLE SET USER_BALANCE = ? WHERE USER_NAME = ?";  
-       
-     
-       
-       try {
-            Connection connection = DriverManager.getConnection("jdbc:derby://localhost:1527/USER_DB","zhyke","zhyke");
-            
-            PreparedStatement ps = connection.prepareStatement(query);
-            
-            ps.setString(1,Double.toString(amount));
-            ps.setString(2,Username);
-            
-            int ctr = ps.executeUpdate(); 
-            
-            if(ctr > 0){
-
-                JOptionPane.showMessageDialog(null,
-                "You have successfully adedd "+amount+" pesos to your account.",
-                "CASH-IN COMPLETE!",
-                JOptionPane.PLAIN_MESSAGE);
-                balance+=amount;
-                
-                this.setVisible(false);
-                new UserFrame(Username).setVisible(true); 
-                
-                
-            }
-            
-            
-        } catch (SQLException ex) {
-            
-        }
         
-    }//GEN-LAST:event_btnAddBalMouseClicked
+        
+    }//GEN-LAST:event_btnAddProductMouseClicked
 
-    private void btnEditInfoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditInfoMouseClicked
+    private void btnViewMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnViewMenuMouseClicked
+       
+        
+        
+        
+        
+    }//GEN-LAST:event_btnViewMenuMouseClicked
+
+    private void btnViewOrdersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnViewOrdersMouseClicked
+       
+        
+    }//GEN-LAST:event_btnViewOrdersMouseClicked
+
+    private void btnDetailsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDetailsMouseClicked
       
         this.setVisible(false);
-        new UserEditFrame(Username).setVisible(true); 
-    }//GEN-LAST:event_btnEditInfoMouseClicked
+        new ShopEditFrame(Username).setVisible(true); 
+    }//GEN-LAST:event_btnDetailsMouseClicked
 
     /**
      * @param args the command line arguments
@@ -368,31 +346,32 @@ public class UserFrame extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(UserFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BusinessFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(UserFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BusinessFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(UserFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BusinessFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(UserFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BusinessFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new UserFrame().setVisible(true);
+                new BusinessFrame().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel btnAddBal;
+    private javax.swing.JLabel btnAddProduct;
     private javax.swing.JButton btnClose;
-    private javax.swing.JLabel btnEditInfo;
+    private javax.swing.JLabel btnDetails;
     private javax.swing.JButton btnLogOut;
-    private javax.swing.JLabel btnMyOrder;
-    private javax.swing.JLabel btnOrder;
+    private javax.swing.JLabel btnViewMenu;
+    private javax.swing.JLabel btnViewOrders;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
