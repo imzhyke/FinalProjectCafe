@@ -44,6 +44,7 @@ public class UserFrame extends javax.swing.JFrame {
                         lblBal.setText("No Balance");
                     }else{
                         lblBal.setText(bal);
+                        balance = Double.parseDouble(bal);
                     }
 
             }
@@ -85,10 +86,8 @@ public class UserFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("User");
-        setMaximumSize(new java.awt.Dimension(380, 750));
         setMinimumSize(new java.awt.Dimension(380, 750));
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(380, 750));
         setResizable(false);
         setSize(new java.awt.Dimension(380, 750));
 
@@ -298,11 +297,13 @@ public class UserFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLogOutActionPerformed
 
     private void btnOrderMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnOrderMouseClicked
-        // TODO add your handling code here:
+         this.setVisible(false);
+         new OrderNow(Username).setVisible(true);
     }//GEN-LAST:event_btnOrderMouseClicked
 
     private void btnMyOrderMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMyOrderMouseClicked
-        // TODO add your handling code here:
+       
+      
     }//GEN-LAST:event_btnMyOrderMouseClicked
 
     private void btnAddBalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddBalMouseClicked
@@ -319,7 +320,7 @@ public class UserFrame extends javax.swing.JFrame {
             
             PreparedStatement ps = connection.prepareStatement(query);
             
-            ps.setString(1,Double.toString(amount));
+            ps.setString(1,Double.toString(amount+balance));
             ps.setString(2,Username);
             
             int ctr = ps.executeUpdate(); 

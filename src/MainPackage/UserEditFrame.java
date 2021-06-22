@@ -181,6 +181,11 @@ public class UserEditFrame extends javax.swing.JFrame {
         btnBack.setMaximumSize(new java.awt.Dimension(47, 20));
         btnBack.setMinimumSize(new java.awt.Dimension(47, 20));
         btnBack.setPreferredSize(new java.awt.Dimension(47, 20));
+        btnBack.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnBackMouseClicked(evt);
+            }
+        });
         btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBackActionPerformed(evt);
@@ -370,6 +375,10 @@ public class UserEditFrame extends javax.swing.JFrame {
        
         
     }//GEN-LAST:event_btnUpdateActionPerformed
+
+    private void btnBackMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBackMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBackMouseClicked
 
     public static void main(String args[]) {
 
