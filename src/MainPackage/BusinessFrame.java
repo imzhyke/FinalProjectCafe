@@ -313,7 +313,8 @@ public class BusinessFrame extends javax.swing.JFrame {
     private void btnViewMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnViewMenuMouseClicked
        
         
-        
+        this.setVisible(false);
+        new ViewProductsFrame(ShopName, Username).setVisible(true);
         
         
     }//GEN-LAST:event_btnViewMenuMouseClicked
